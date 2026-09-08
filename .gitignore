@@ -1,0 +1,11 @@
+# Editor and local tool settings
+.qodo/
+
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+
+# Operating-system files
+.DS_Store
+Thumbs.db

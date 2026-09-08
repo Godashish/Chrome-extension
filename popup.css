@@ -1,0 +1,64 @@
+:root {
+  --overdue: #dc2626;
+  --due-soon: #d97706;
+  --upcoming: #2563eb;
+  --paid: #16a34a;
+  --border: #e5e7eb;
+  --text: #1f2937;
+  --muted: #6b7280;
+}
+* { box-sizing: border-box; }
+body {
+  width: 380px;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background: #fafafa;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px 8px;
+}
+header h1 { font-size: 15px; margin: 0; }
+#settingsBtn {
+  background: none; border: none; cursor: pointer; font-size: 16px; color: var(--muted);
+}
+#inputSection { padding: 0 14px 10px; }
+textarea#inputText {
+  width: 100%; min-height: 80px; resize: vertical; padding: 8px;
+  border: 1px solid var(--border); border-radius: 6px; font-size: 12px; font-family: inherit;
+}
+.error {
+  color: var(--overdue); font-size: 12px; margin-top: 6px;
+}
+button#extractBtn {
+  margin-top: 8px; width: 100%; padding: 8px; border: none; border-radius: 6px;
+  background: #111827; color: white; font-size: 13px; cursor: pointer;
+}
+button#extractBtn:disabled { opacity: 0.6; cursor: default; }
+#listSection { border-top: 1px solid var(--border); max-height: 320px; overflow-y: auto; }
+.empty { padding: 20px 14px; text-align: center; color: var(--muted); font-size: 12px; }
+ul#invoiceList { list-style: none; margin: 0; padding: 0; }
+li.invoice-row {
+  padding: 10px 14px; border-bottom: 1px solid var(--border);
+}
+.invoice-top { display: flex; justify-content: space-between; align-items: baseline; }
+.vendor { font-weight: 600; font-size: 13px; }
+.amount { font-weight: 600; font-size: 13px; }
+.meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.badge {
+  display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 6px;
+  border-radius: 10px; margin-top: 4px; color: white;
+}
+.badge.overdue { background: var(--overdue); }
+.badge.due-soon { background: var(--due-soon); }
+.badge.upcoming { background: var(--upcoming); }
+.badge.paid { background: var(--paid); }
+.row-actions { margin-top: 6px; display: flex; gap: 6px; }
+.row-actions button {
+  font-size: 11px; padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border);
+  background: white; cursor: pointer;
+}
+.row-actions button.danger { color: var(--overdue); border-color: var(--overdue); }
