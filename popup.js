@@ -97,9 +97,21 @@ async function render() {
   invoiceList.innerHTML = '';
   emptyState.hidden = records.length > 0;
 
-  for (const rec of records) {
+  for (const rec of sortByUrgency(records)) {
     invoiceList.appendChild(renderRow(rec));
   }
+}
+
+const URGENCY_RANK = { overdue: 0, 'due-soon': 1, upcoming: 2, paid: 3 };
+
+function sortByUrgency(records) {
+  return [...records].sort((a, b) => {
+    const rankDiff = URGENCY_RANK[statusFor(a).cls] - URGENCY_RANK[statusFor(b).cls];
+    if (rankDiff !== 0) return rankDiff;
+    if (!a.dueDate) return 1;
+    if (!b.dueDate) return -1;
+    return a.dueDate.localeCompare(b.dueDate);
+  });
 }
 
 function renderRow(rec) {
