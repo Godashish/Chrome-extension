@@ -38,7 +38,7 @@ async function handleExtract() {
       id: crypto.randomUUID(),
       vendor: extracted.vendor || 'Unknown',
       invoiceNumber: extracted.invoiceNumber || '',
-      amount: extracted.amount ?? null,
+      amount: extracted.amount ? extracted.amount : null,
       currency: extracted.currency || '',
       dueDate: extracted.dueDate || '',
       markedPaid: extracted.status === 'paid',
@@ -144,7 +144,7 @@ function statusFor(rec) {
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  const due = new Date(rec.dueDate);
+  const due = parseLocalDate(rec.dueDate);
   const diffDays = Math.round((due - today) / 86400000);
 
   if (diffDays < 0) return { label: 'Overdue', cls: 'overdue' };
@@ -161,9 +161,16 @@ function formatCurrency(amount, currency) {
 }
 
 function formatDate(isoDate) {
-  const d = new Date(isoDate);
+  const d = parseLocalDate(isoDate);
   if (isNaN(d)) return isoDate;
   return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function parseLocalDate(isoDate) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(isoDate);
+  if (!match) return new Date(isoDate);
+  const [, year, month, day] = match;
+  return new Date(Number(year), Number(month) - 1, Number(day));
 }
 
 function escapeHtml(str) {
